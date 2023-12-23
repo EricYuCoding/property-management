@@ -1,0 +1,6 @@
+git init
+git add
+git commit -m "any message"
+git remote add origin https://github.com/melbourneeric/property-management.git
+git remote set-url origin https://melbourneeric:@github.com/melbourneeric/property-management.git
+git push --set-upstream origin master
