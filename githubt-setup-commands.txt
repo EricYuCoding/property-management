@@ -1,6 +1,15 @@
-git init
+first time git & github setup
+=================================
+ init
 git add
 git commit -m "any message"
 git remote add origin https://github.com/melbourneeric/property-management.git
 git remote set-url origin https://melbourneeric:@github.com/melbourneeric/property-management.git
 git push --set-upstream origin master
+
+next time onwards
+==========================================
+1. git pull
+2. git add.
+3. git commit -m "some message"
+4. git push
