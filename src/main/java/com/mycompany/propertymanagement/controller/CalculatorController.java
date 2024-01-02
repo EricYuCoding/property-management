@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/calculator")
 public class CalculatorController {
-//test git
+//test git2
     @GetMapping("/add")
     public Double add(@RequestParam("num111") Double num1, @RequestParam("num222") Double num2){
         return num1+num2;
