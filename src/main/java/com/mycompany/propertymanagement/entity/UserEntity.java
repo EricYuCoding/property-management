@@ -16,11 +16,13 @@ import java.security.PrivilegedAction;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String ownerName;
     @Column(name = "EMAIL", nullable = false)
     private String ownerEmail;
     private String phone;
+    @Column(nullable = false)
     private String password;
 }

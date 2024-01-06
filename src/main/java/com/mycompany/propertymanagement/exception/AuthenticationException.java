@@ -9,13 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BusinessException extends RuntimeException{
+public class AuthenticationException extends RuntimeException{
 
     private List<ErrorModel> errors;
 
-
-    public BusinessException(List<ErrorModel> errors){
-        this.errors = errors;
-    }
+    public AuthenticationException(List<ErrorModel> errors){this.errors = errors;}
 }
-

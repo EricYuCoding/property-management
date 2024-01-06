@@ -15,8 +15,11 @@ import lombok.Setter;
 public class UserDTO {
 
     private Long id;
+    @NotNull(message = "OwnerName is mandatory")
+    @NotEmpty(message = "ownerName cannot be empty")
+    @Size(min = 1, max = 50, message = "OwnerName should be between 1 to 50 characters in length")
     private String ownerName;
-    @NotNull(message = "Owner Email is mandatory ")
+    @NotNull(message = "Owner Email is mandatory")
     @NotEmpty(message = "ownerName cannot be empty")
     @Size(min = 1, max = 50, message = "Owner Email should be between 1 to 50 characters in length")
     private String ownerEmail;
@@ -24,6 +27,12 @@ public class UserDTO {
     @NotNull(message = "Password cannot be null")
     @NotEmpty(message = "Password cannot be empty")
     private String password;
+
+    private String houseNo;
+    private String street;
+    private String city;
+    private String postalCode;
+    private String country;
 }
 
 

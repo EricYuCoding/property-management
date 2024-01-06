@@ -2,9 +2,12 @@ package com.mycompany.propertymanagement.service.impl;
 
 import com.mycompany.propertymanagement.converter.UserConverter;
 import com.mycompany.propertymanagement.dto.UserDTO;
+import com.mycompany.propertymanagement.entity.AddressEntity;
 import com.mycompany.propertymanagement.entity.UserEntity;
 import com.mycompany.propertymanagement.exception.BusinessException;
 import com.mycompany.propertymanagement.exception.ErrorModel;
+import com.mycompany.propertymanagement.repository.AddressRepository;
+import com.mycompany.propertymanagement.repository.PropertyRepository;
 import com.mycompany.propertymanagement.repository.UserRepository;
 import com.mycompany.propertymanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserConverter userConverter;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @Override
     public UserDTO register(UserDTO userDTO) {
 
@@ -31,13 +37,26 @@ public class UserServiceImpl implements UserService {
             List<ErrorModel> errorModelList = new ArrayList<>();
             ErrorModel errorModel = new ErrorModel();
             errorModel.setCode("EMAIL_ALREADY_EXIST");
-            errorModel.setMessage("The Email which you are tring to register already exists");
+            errorModel.setMessage("The Email which you are trying to register already exists");
             errorModelList.add(errorModel);
 
             throw new BusinessException(errorModelList);
         }
+
+
         UserEntity userEntity = userConverter.convertDTOtoEntity(userDTO);
         userEntity = userRepository.save(userEntity);
+
+        AddressEntity addressEntity = new AddressEntity();
+        addressEntity.setHouseNo(userDTO.getHouseNo());
+        addressEntity.setCity(userDTO.getCity());
+        addressEntity.setPostalCode(userDTO.getPostalCode());
+        addressEntity.setStreet(userDTO.getStreet());
+        addressEntity.setCountry(userDTO.getCountry());
+        addressEntity.setUserEntity(userEntity);
+
+        addressRepository.save(addressEntity);
+
         userDTO = userConverter.convertEntityToDTO(userEntity);
         return userDTO;
     }
@@ -50,11 +69,11 @@ public class UserServiceImpl implements UserService {
             userDTO = userConverter.convertEntityToDTO(optionalUserEntity.get());
             return userDTO;
         }else {
-            List<ErrorModel> errorModelList = new ArrayList<>();
-            ErrorModel errorModel = new ErrorModel();
-            errorModel.setCode("INVALID_LOGIN");
-            errorModel.setMessage("Incorrect Email or Password");
-            errorModelList.add(errorModel);
+              List<ErrorModel> errorModelList = new ArrayList<>();
+              ErrorModel errorModel = new ErrorModel();
+              errorModel.setCode("Wrong username or password");
+              errorModel.setMessage("Please try again");
+              errorModelList.add(errorModel);
 
             throw new BusinessException(errorModelList);
         }
